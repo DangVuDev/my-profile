@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body{background:#f0f2f5;display:flex;justify-content:center;padding:20px;}
+.phone{width:375px;height:812px;background:#fff;border-radius:30px;overflow:hidden;
+  box-shadow:0 15px 35px rgba(0,0,0,.25);display:flex;flex-direction:column;position:relative;}
+
+/* Cover + Avatar */
+.cover{height:180px;background:url('https://anhdepfree.com/wp-content/uploads/2020/11/hinh-nen-phong-canh-1920x1080.jpg') center/cover no-repeat;position:relative;}
+.avatar{width: 150px;height:150px;border-radius:50%;border:5px solid #fff;
+  position:absolute;bottom:-50px;left:25%;transform:translateX(-50%);
+  background:url('https://scontent.fhan17-1.fna.fbcdn.net/v/t39.30808-1/475510642_597003689776162_6875163495834661125_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=102&ccb=1-7&_nc_sid=1d2534&_nc_ohc=IBgksNx60RQQ7kNvwEMxjuH&_nc_oc=Adk2x4UmF-vlmrKbg_LnduaEUl9CV8pi35HeuPeUTE4tOJp_94aNIsaPR_SyHIaM7UE&_nc_zt=24&_nc_ht=scontent.fhan17-1.fna&_nc_gid=Yx1iHPF6S5MOMs50xAxB9Q&oh=00_AfbPCisvO95KN10JokXSokypmXg8cfPgnN0IRZQYR6gbuw&oe=68CB6E6F') center/cover;box-shadow:0 6px 15px rgba(0,0,0,0.3);}
+
+/* Profile content */
+.profile-content{flex:1;overflow-y:auto;padding:70px 15px 15px;}
+.name{font-size:22px;font-weight:700;text-align:center;margin-bottom:5px;}
+.job{font-size:14px;color:#666;text-align:center;margin-bottom:15px;}
+.bio{font-size:13px;color:#444;text-align:center;margin-bottom:20px;line-height:1.4;}
+
+/* Info cards */
+.section{margin-bottom:18px;}
+.section-title{font-size:14px;font-weight:600;color:#555;margin-bottom:8px;}
+.info-card{background:#fff;border-radius:15px;padding:15px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.08);margin-bottom:10px;}
+.info-item{display:flex;align-items:center;margin-bottom:10px;}
+.info-item:last-child{margin-bottom:0;}
+.info-icon{width:32px;height:32px;border-radius:8px;display:flex;
+  justify-content:center;align-items:center;color:#fff;margin-right:10px;font-size:16px;}
+.i-home{background:#ff6b6b;}
+.i-edu{background:#1e90ff;}
+.i-work{background:#2ed573;}
+.i-heart{background:#ff4757;}
+.i-star{background:#ffa502;}
+
+/* Contact */
+.contact-links{display:flex;flex-wrap:wrap;gap:10px;}
+.contact-link{flex:1 1 calc(50% - 10px);background:#fff;border-radius:12px;
+  padding:10px;display:flex;align-items:center;gap:8px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.2s;}
+.contact-link:hover{transform:translateY(-3px);}
+.contact-link img{width:22px;height:22px;border-radius:6px;}
+
+/* Gallery */
+.gallery{margin-top:15px;}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+.gallery-grid img{width:100%;height:110px;object-fit:cover;border-radius:10px;
+  cursor:pointer;transition:transform .2s;}
+.gallery-grid img:hover{transform:scale(1.05);}
+
+
+
+/* Modal */
+.modal {
+  display:none; /* giữ mặc định ẩn */
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,.55);
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+}
+.modal-content{background:#fff;width:320px;border-radius:20px;padding:25px 20px 30px;
+  text-align:center;position:relative;box-shadow:0 8px 25px rgba(0,0,0,0.25);}
+.close-btn{position:absolute;top:12px;right:15px;font-size:20px;color:#888;cursor:pointer;}
+.modal-icon img{width:60px;height:60px;margin:0 auto 12px;border-radius:12px;}
+#modalTitle{margin:10px 0 5px;font-size:20px;font-weight:600;color:#333;}
+#modalInfo{color:#555;font-size:14px;margin-bottom:18px;}
+#modalLink{display:inline-block;color:#fff;text-decoration:none;padding:10px 20px;
+  border-radius:12px;font-size:14px;font-weight:500;transition:all 0.25s ease;}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="cover">
+    <div class="avatar"></div>
+  </div>
+  <div class="profile-content">
+    <div class="name">Vũ Văn Đăng</div>
+    <div class="job">💻 Developer</div>
+    <div class="bio">“Sống để học hỏi và chia sẻ. Mình yêu công nghệ, thích du lịch và luôn muốn thử thách bản thân với những điều mới mẻ.”</div>
+
+    <div class="section">
+      <div class="section-title">Thông tin cơ bản</div>
+      <div class="info-card">
+        <div class="info-item"><div class="info-icon i-home">🏠</div><span>Quê quán: Ninh Bình, Việt Nam</span></div>
+        <div class="info-item"><div class="info-icon i-edu">🎓</div><span>Đại học Bách Khoa Hà Nội</span></div>
+        <div class="info-item"><div class="info-icon i-work">🏢</div><span>Công ty: SpaceX</span></div>
+        <div class="info-item"><div class="info-icon i-heart">❤️</div><span>Tình trạng: Độc thân</span></div>
+        <div class="info-item"><div class="info-icon i-star">⭐</div><span>Sở thích: Coding, Chụp ảnh, Du lịch</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Liên hệ</div>
+      <div class="contact-links">
+        <div class="contact-link" onclick="openModal('Email','dang19082004@gmail.com','','#EA4335','https://cdn-icons-png.flaticon.com/512/281/281769.png')">
+          <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Email"> Email
+        </div>
+        <div class="contact-link" onclick="openModal('SĐT','0789108925','','#25D366','https://cdn-icons-png.flaticon.com/512/724/724664.png')">
+          <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone"> SĐT
+        </div>
+        <div class="contact-link" onclick="openModal('Facebook','Vũ Văn Đăng','https://www.facebook.com/angvuvan.352925','#1877F2','https://cdn-icons-png.flaticon.com/512/733/733547.png')">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"> Facebook
+        </div>
+        <div class="contact-link" onclick="openModal('TikTok','@dangvu1908','https://www.tiktok.com/@dangvu1908?is_from_webapp=1&sender_device=pc','#000000','https://cdn-icons-png.flaticon.com/512/3046/3046121.png')">
+          <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"> TikTok
+        </div>
+        <div class="contact-link" onclick="openModal('GitHub','Dang Vu Dev','https://github.com/DangVuDev','#333333','https://cdn-icons-png.flaticon.com/512/733/733553.png')">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub"> GitHub
+        </div>
+        <div class="contact-link" onclick="openModal('Website','www.myportfolio.com','https://myportfolio.com','#4B7BEC','https://cdn-icons-png.flaticon.com/512/841/841364.png')">
+          <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png" alt="Website"> Website
+        </div>
+      </div>
+    </div>
+
+    <div class="section gallery">
+      <div class="section-title">Ảnh Check-in</div>
+      <div class="gallery-grid">
+        <img src="https://www.viewbug.com/media/mediafiles/2016/10/15/69140061_large.jpg" alt="img1">
+        <img src="https://www.viewbug.com/media/mediafiles/2016/02/04/63110065_large1300.jpg" alt="img2">
+        <img src="https://i.pinimg.com/736x/fb/5e/dc/fb5edcae426bdc9f7bfedc87bc83e1d3.jpg" alt="img3">
+        <img src="https://haycafe.vn/wp-content/uploads/2023/06/hinh-anh-thien-nhien-dep-nhat-the-gioi.jpg" alt="img4">
+        <img src="https://tse4.mm.bing.net/th/id/OIP.Sm1mglZbcXQf7Paqry-_lAHaEo?pid=Api&P=0&h=180" alt="img5">
+        <img src="https://tse3.mm.bing.net/th/id/OIP.2n0tZLeXNWtOfvxtuEfzgQHaFh?pid=Api&P=0&h=180" alt="img6">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="contactModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">✖</span>
+    <div class="modal-icon"><img id="modalIcon" src="" alt="icon"></div>
+    <h3 id="modalTitle"></h3>
+    <p id="modalInfo"></p>
+    <a id="modalLink" target="_blank">Điều hướng</a>
+  </div>
+</div>
+
+<script>
+function openModal(title, info, link='', color='#4B7BEC', iconUrl='') {
+  document.getElementById("modalTitle").innerText = title;
+  document.getElementById("modalInfo").innerText = info;
+  const modalLink = document.getElementById("modalLink");
+  modalLink.href = link || '#';
+  modalLink.style.background = color;
+  if(iconUrl){
+    document.getElementById("modalIcon").src = iconUrl;
+  }
+  document.getElementById("contactModal").style.display = "flex";
+}
+function closeModal() {
+  document.getElementById("contactModal").style.display = "none";
+}
+</script>
+</body>
+</html>
