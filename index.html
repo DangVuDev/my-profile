@@ -1,166 +1,535 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profile</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-body{background:#f0f2f5;display:flex;justify-content:center;padding:20px;}
-.phone{width:375px;height:812px;background:#fff;border-radius:30px;overflow:hidden;
-  box-shadow:0 15px 35px rgba(0,0,0,.25);display:flex;flex-direction:column;position:relative;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Đẹp Trai - Profile Developer Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+    
+    <style>
+        /* ========================================================== */
+        /* CSS TÙY CHỈNH CHO HIỆU ỨNG PREMIUM (CONTACT WIDGETS)       */
+        /* ========================================================== */
 
-/* Cover + Avatar */
-.cover{height:180px;background:url('https://anhdepfree.com/wp-content/uploads/2020/11/hinh-nen-phong-canh-1920x1080.jpg') center/cover no-repeat;position:relative;}
-.avatar{width: 150px;height:150px;border-radius:50%;border:5px solid #fff;
-  position:absolute;bottom:-50px;left:25%;transform:translateX(-50%);
-  background:url('https://scontent.fhan17-1.fna.fbcdn.net/v/t39.30808-1/475510642_597003689776162_6875163495834661125_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=102&ccb=1-7&_nc_sid=1d2534&_nc_ohc=IBgksNx60RQQ7kNvwEMxjuH&_nc_oc=Adk2x4UmF-vlmrKbg_LnduaEUl9CV8pi35HeuPeUTE4tOJp_94aNIsaPR_SyHIaM7UE&_nc_zt=24&_nc_ht=scontent.fhan17-1.fna&_nc_gid=Yx1iHPF6S5MOMs50xAxB9Q&oh=00_AfbPCisvO95KN10JokXSokypmXg8cfPgnN0IRZQYR6gbuw&oe=68CB6E6F') center/cover;box-shadow:0 6px 15px rgba(0,0,0,0.3);}
+        /* Nền Premium (Dark mode với chút texture) */
+        .premium-bg {
+            background-color: #0d1117; 
+            background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.1) 0, transparent 50%);
+            min-height: 100vh;
+        }
+        
+        /* Đổ bóng Lộng lẫy cho Profile Card */
+        #user-profile {
+            box-shadow: 0 40px 70px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.15);
+        }
 
-/* Profile content */
-.profile-content{flex:1;overflow-y:auto;padding:70px 15px 15px;}
-.name{font-size:22px;font-weight:700;text-align:center;margin-bottom:5px;}
-.job{font-size:14px;color:#666;text-align:center;margin-bottom:15px;}
-.bio{font-size:13px;color:#444;text-align:center;margin-bottom:20px;line-height:1.4;}
+        /* Gradient cho tiêu đề chính */
+        .premium-text {
+            background-image: linear-gradient(to right, #8b5cf6, #3b82f6, #10b981); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Animation Scroll-Reveal */
+        .animate-scroll-reveal { 
+            opacity: 0; 
+            transition: all 0.8s ease-out;
+            transform: translateY(30px);
+        }
+        .animate-scroll-reveal.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-/* Info cards */
-.section{margin-bottom:18px;}
-.section-title{font-size:14px;font-weight:600;color:#555;margin-bottom:8px;}
-.info-card{background:#fff;border-radius:15px;padding:15px;
-  box-shadow:0 3px 8px rgba(0,0,0,0.08);margin-bottom:10px;}
-.info-item{display:flex;align-items:center;margin-bottom:10px;}
-.info-item:last-child{margin-bottom:0;}
-.info-icon{width:32px;height:32px;border-radius:8px;display:flex;
-  justify-content:center;align-items:center;color:#fff;margin-right:10px;font-size:16px;}
-.i-home{background:#ff6b6b;}
-.i-edu{background:#1e90ff;}
-.i-work{background:#2ed573;}
-.i-heart{background:#ff4757;}
-.i-star{background:#ffa502;}
+        /* CONTACT WIDGET CUSTOM STYLE - NEO-BRUTALISM LIGHT */
 
-/* Contact */
-.contact-links{display:flex;flex-wrap:wrap;gap:10px;}
-.contact-link{flex:1 1 calc(50% - 10px);background:#fff;border-radius:12px;
-  padding:10px;display:flex;align-items:center;gap:8px;
-  box-shadow:0 3px 8px rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.2s;}
-.contact-link:hover{transform:translateY(-3px);}
-.contact-link img{width:22px;height:22px;border-radius:6px;}
+        .contact-widget {
+            position: relative;
+            background-color: #1a1a2e; /* Nền widget tối */
+            border: 2px solid #3b82f6; /* Viền chính */
+            transition: all 0.3s ease-in-out;
+            /* Hiệu ứng Neo-brutalism nhẹ */
+            box-shadow: 5px 5px 0px 0px rgba(59, 130, 246, 0.5); 
+            overflow: hidden;
+            z-index: 1;
+        }
 
-/* Gallery */
-.gallery{margin-top:15px;}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
-.gallery-grid img{width:100%;height:110px;object-fit:cover;border-radius:10px;
-  cursor:pointer;transition:transform .2s;}
-.gallery-grid img:hover{transform:scale(1.05);}
+        /* Hiệu ứng HOVER (Gradient Neon + Nâng lên) */
+        .contact-widget:hover {
+            transform: translateY(-5px) scale(1.02);
+            /* Bỏ bóng cũ, thay bằng bóng gradient neon */
+            box-shadow: 0 0 10px #3b82f6, 0 0 20px #8b5cf6, 5px 5px 0px 0px rgba(139, 92, 246, 0.8);
+            border-color: #f7d45c; /* Viền vàng nổi bật */
+        }
 
+        /* Element tạo hiệu ứng gradient lướt qua */
+        .contact-widget-flash {
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 300%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: skewX(-45deg);
+            transition: left 0.5s ease;
+        }
 
+        .contact-widget:hover .contact-widget-flash {
+            left: 150%;
+        }
 
-/* Modal */
-.modal {
-  display:none; /* giữ mặc định ẩn */
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,.55);
-  justify-content:center;
-  align-items:center;
-  z-index:100;
-}
-.modal-content{background:#fff;width:320px;border-radius:20px;padding:25px 20px 30px;
-  text-align:center;position:relative;box-shadow:0 8px 25px rgba(0,0,0,0.25);}
-.close-btn{position:absolute;top:12px;right:15px;font-size:20px;color:#888;cursor:pointer;}
-.modal-icon img{width:60px;height:60px;margin:0 auto 12px;border-radius:12px;}
-#modalTitle{margin:10px 0 5px;font-size:20px;font-weight:600;color:#333;}
-#modalInfo{color:#555;font-size:14px;margin-bottom:18px;}
-#modalLink{display:inline-block;color:#fff;text-decoration:none;padding:10px 20px;
-  border-radius:12px;font-size:14px;font-weight:500;transition:all 0.25s ease;}
-</style>
+        /* Icon Glow */
+        .icon-glow {
+            filter: drop-shadow(0 0 8px var(--icon-color, #fff));
+        }
+
+        /* ========================================================== */
+        /* Màu Icon theo loại (Custom Property)                       */
+        /* Đã thêm Facebook và TikTok                                 */
+        /* ========================================================== */
+        .icon-github { --icon-color: #C9D1D9; }
+        .icon-linkedin { --icon-color: #0A66C2; }
+        .icon-facebook { --icon-color: #1877F2; } /* MÀU MỚI */
+        .icon-tiktok { --icon-color: #FE2C55; }   /* MÀU MỚI */
+        .icon-email { --icon-color: #EA4335; }
+        .icon-zalo { --icon-color: #00A6FF; }
+    </style>
 </head>
-<body>
-<div class="phone">
-  <div class="cover">
-    <div class="avatar"></div>
-  </div>
-  <div class="profile-content">
-    <div class="name">Vũ Văn Đăng</div>
-    <div class="job">💻 Developer</div>
-    <div class="bio">“Sống để học hỏi và chia sẻ. Mình yêu công nghệ, thích du lịch và luôn muốn thử thách bản thân với những điều mới mẻ.”</div>
+<body class="premium-bg antialiased text-gray-100">
 
-    <div class="section">
-      <div class="section-title">Thông tin cơ bản</div>
-      <div class="info-card">
-        <div class="info-item"><div class="info-icon i-home">🏠</div><span>Quê quán: Ninh Bình, Việt Nam</span></div>
-        <div class="info-item"><div class="info-icon i-edu">🎓</div><span>Đại học Bách Khoa Hà Nội</span></div>
-        <div class="info-item"><div class="info-icon i-work">🏢</div><span>Công ty: SpaceX</span></div>
-        <div class="info-item"><div class="info-icon i-heart">❤️</div><span>Tình trạng: Độc thân</span></div>
-        <div class="info-item"><div class="info-icon i-star">⭐</div><span>Sở thích: Coding, Chụp ảnh, Du lịch</span></div>
-      </div>
+    <div x-data="profileData()" x-init="$nextTick(() => { initObserver() })" class="container mx-auto p-4 sm:p-6 lg:p-10 max-w-7xl">
+        
+        <div x-show="showCopyMessage" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-full"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 translate-y-full"
+             class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 p-4 bg-green-600/90 backdrop-blur-sm text-white rounded-xl shadow-2xl font-semibold border-2 border-green-400">
+            <span x-text="copyMessage"></span>
+        </div>
+
+        <div id="user-profile" class="bg-gray-800/70 backdrop-blur-sm rounded-3xl mb-16 transition-transform duration-500 transform translate-y-0 opacity-100">
+            <div class="p-10 w-full">
+                <div class="flex flex-col items-center lg:flex-row lg:items-start lg:space-x-10">
+                    <div class="flex-shrink-0 mb-6 lg:mb-0">
+                        <img :src="user.profileImageUrl" :alt="user.name" 
+                            class="w-40 h-40 object-cover rounded-full border-4 border-indigo-500 shadow-2xl transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-indigo-500/50 animate-pulse-once">
+                    </div>
+                    
+                    <div class="flex-grow text-center lg:text-left">
+                        <h1 class="text-6xl font-black premium-text" x-text="user.name"></h1>
+                        <p class="text-2xl text-purple-400 font-semibold mb-3 tracking-wider" x-text="`${user.job} @ ${user.company}`"></p>
+                        <p class="text-gray-400 mb-6 italic text-lg border-l-4 border-indigo-500 pl-4" x-text="`&quot;${user.bio}&quot;`"></p>
+                        
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-4 text-sm">
+                            <span class="px-4 py-1 bg-blue-600/30 text-blue-200 rounded-full font-medium shadow-lg hover:bg-blue-600/50 transition">🏠 <span x-text="user.hometown"></span></span>
+                            <span class="px-4 py-1 bg-green-600/30 text-green-200 rounded-full font-medium shadow-lg hover:bg-green-600/50 transition">🎓 <span x-text="user.education"></span></span>
+                            <span class="px-4 py-1 bg-red-600/30 text-red-200 rounded-full font-medium shadow-lg hover:bg-red-600/50 transition">❤️ <span x-text="user.status"></span></span>
+                        </div>
+                        <p class="mt-6 text-gray-300 text-xl font-medium"><strong>🚀 Tech Stack:</strong> <span x-text="user.interests"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+    <h3 class="text-3xl font-bold text-gray-100 mt-12 mb-8 border-b-2 border-indigo-500/50 pb-3 premium-text animate-scroll-reveal" data-delay="0s">
+        <i class="fas fa-plug mr-2"></i> Kết Nối Premium
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <template x-for="(contact, index) in user.contacts" :key="index">
+            <a :href="contact.url"
+               :target="contact.target"
+               @click.prevent="contact.type === 'email' || contact.type === 'zalo' ? copyText(contact.value, contact.title) : window.open(contact.url, contact.target)"
+               class="contact-widget flex flex-col items-start p-6 rounded-xl animate-scroll-reveal" 
+               :data-delay="`${0.1 + index * 0.1}s`">
+                
+                <div class="contact-widget-flash"></div>
+                
+                <div class="w-12 h-12 mb-3 rounded-full flex items-center justify-center icon-glow p-2"
+                     :style="`background-color: ${contact.bg_color}; --icon-color: ${contact.bg_color}`">
+                    <img :src="contact.icon_url" :alt="contact.type" class="w-8 h-8 filter invert">
+                </div>
+                
+                <p class="text-lg font-extrabold text-white mb-1" x-text="contact.title"></p>
+                
+                <span class="text-sm text-gray-400 mb-3" x-text="contact.description"></span>
+
+                <span class="text-md font-mono text-indigo-400 truncate w-full" x-text="contact.value"></span>
+                
+                <div class="mt-4">
+                    <span :href="contact.url" 
+                          :target="contact.target"
+                          class="px-3 py-1.5 text-xs font-bold rounded-full text-white transition duration-200 shadow-md"
+                          :style="`background-color: ${contact.bg_color};`"
+                          x-text="contact.action_label">
+                    </span>
+                </div>
+            </a>
+        </template>
     </div>
-
-    <div class="section">
-      <div class="section-title">Liên hệ</div>
-      <div class="contact-links">
-        <div class="contact-link" onclick="openModal('Email','dang19082004@gmail.com','','#EA4335','https://cdn-icons-png.flaticon.com/512/281/281769.png')">
-          <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Email"> Email
-        </div>
-        <div class="contact-link" onclick="openModal('SĐT','0789108925','','#25D366','https://cdn-icons-png.flaticon.com/512/724/724664.png')">
-          <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone"> SĐT
-        </div>
-        <div class="contact-link" onclick="openModal('Facebook','Vũ Văn Đăng','https://www.facebook.com/angvuvan.352925','#1877F2','https://cdn-icons-png.flaticon.com/512/733/733547.png')">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"> Facebook
-        </div>
-        <div class="contact-link" onclick="openModal('TikTok','@dangvu1908','https://www.tiktok.com/@dangvu1908?is_from_webapp=1&sender_device=pc','#000000','https://cdn-icons-png.flaticon.com/512/3046/3046121.png')">
-          <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"> TikTok
-        </div>
-        <div class="contact-link" onclick="openModal('GitHub','Dang Vu Dev','https://github.com/DangVuDev','#333333','https://cdn-icons-png.flaticon.com/512/733/733553.png')">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub"> GitHub
-        </div>
-        <div class="contact-link" onclick="openModal('Website','www.myportfolio.com','https://myportfolio.com','#4B7BEC','https://cdn-icons-png.flaticon.com/512/841/841364.png')">
-          <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png" alt="Website"> Website
-        </div>
-      </div>
-    </div>
-
-    <div class="section gallery">
-      <div class="section-title">Ảnh Check-in</div>
-      <div class="gallery-grid">
-        <img src="https://www.viewbug.com/media/mediafiles/2016/10/15/69140061_large.jpg" alt="img1">
-        <img src="https://www.viewbug.com/media/mediafiles/2016/02/04/63110065_large1300.jpg" alt="img2">
-        <img src="https://i.pinimg.com/736x/fb/5e/dc/fb5edcae426bdc9f7bfedc87bc83e1d3.jpg" alt="img3">
-        <img src="https://haycafe.vn/wp-content/uploads/2023/06/hinh-anh-thien-nhien-dep-nhat-the-gioi.jpg" alt="img4">
-        <img src="https://tse4.mm.bing.net/th/id/OIP.Sm1mglZbcXQf7Paqry-_lAHaEo?pid=Api&P=0&h=180" alt="img5">
-        <img src="https://tse3.mm.bing.net/th/id/OIP.2n0tZLeXNWtOfvxtuEfzgQHaFh?pid=Api&P=0&h=180" alt="img6">
-      </div>
-    </div>
-  </div>
-
 </div>
+        
+        <hr class="my-16 border-gray-700">
 
-<!-- Modal -->
-<div class="modal" id="contactModal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal()">✖</span>
-    <div class="modal-icon"><img id="modalIcon" src="" alt="icon"></div>
-    <h3 id="modalTitle"></h3>
-    <p id="modalInfo"></p>
-    <a id="modalLink" target="_blank">Điều hướng</a>
-  </div>
-</div>
+        <div>
+            <h2 class="text-3xl font-extrabold mb-8 pt-4 premium-text animate-scroll-reveal" data-delay="0s">
+                <i class="fas fa-star mr-2"></i> Nhận xét từ Đồng nghiệp & Khách hàng
+            </h2>
+            <div id="testimonials-section" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-gray-800/80 p-8 rounded-2xl shadow-xl border border-indigo-700/50 hover:bg-gray-700/60 transition duration-300 animate-scroll-reveal" data-delay="0.1s">
+                    <i class="fas fa-quote-left text-indigo-500 text-2xl mb-4"></i>
+                    <p class="text-xl italic mb-4 text-gray-300 leading-relaxed">"Đăng là một trong những Backend Developer **xuất sắc** nhất mà tôi từng hợp tác. Khả năng giải quyết vấn đề bằng **Cosmos SDK** của cậu ấy thực sự đáng kinh ngạc. Dự án blockchain của chúng tôi đã thành công nhờ vào sự tỉ mỉ và kiến thức sâu rộng về Web3 của cậu ấy."</p>
+                    <p class="text-right font-extrabold text-lg text-indigo-400">- Nguyễn Văn A (CTO, MegaCorp)</p>
+                </div>
+                <div class="bg-gray-800/80 p-8 rounded-2xl shadow-xl border border-indigo-700/50 hover:bg-gray-700/60 transition duration-300 animate-scroll-reveal" data-delay="0.2s">
+                    <i class="fas fa-quote-left text-indigo-500 text-2xl mb-4"></i>
+                    <p class="text-xl italic mb-4 text-gray-300 leading-relaxed">"Sự đam mê với **C# .NET** và tư duy logic mạnh mẽ giúp Đăng luôn hoàn thành các module phức tạp trước thời hạn. Cậu ấy không chỉ là một coder giỏi mà còn là người luôn tìm tòi, chia sẻ kiến thức mới, đặc biệt là trong lĩnh vực AI và **bảo mật hệ thống**."</p>
+                    <p class="text-right font-extrabold text-lg text-indigo-400">- Trần Thị B (Lead Dev, TechSolutions)</p>
+                </div>
+            </div>
+        </div>
 
-<script>
-function openModal(title, info, link='', color='#4B7BEC', iconUrl='') {
-  document.getElementById("modalTitle").innerText = title;
-  document.getElementById("modalInfo").innerText = info;
-  const modalLink = document.getElementById("modalLink");
-  modalLink.href = link || '#';
-  modalLink.style.background = color;
-  if(iconUrl){
-    document.getElementById("modalIcon").src = iconUrl;
-  }
-  document.getElementById("contactModal").style.display = "flex";
-}
-function closeModal() {
-  document.getElementById("contactModal").style.display = "none";
-}
-</script>
+        <div>
+            <h2 class="text-3xl font-extrabold mb-8 pt-4 premium-text animate-scroll-reveal" data-delay="0s">
+                 <i class="fas fa-rocket mr-2"></i> Các Dự án Nổi bật
+            </h2>
+            <div id="projects-section" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-gray-800/80 p-6 rounded-2xl shadow-xl border border-purple-700/50 hover:bg-gray-700/60 transition duration-300 animate-scroll-reveal" data-delay="0.1s">
+                    <h3 class="text-2xl font-bold text-purple-400 mb-2">Decentralized Voting System (DVS)</h3>
+                    <p class="text-sm italic text-gray-400 mb-3">Backend: C# .NET Core, Blockchain: Cosmos SDK</p>
+                    <p class="text-300 mb-4">Dự án xây dựng hệ thống **bỏ phiếu phi tập trung**, đảm bảo tính minh bạch và bất biến của kết quả. Tôi chịu trách nhiệm thiết kế API gateway bằng .NET và tích hợp mô-đun Proof-of-Stake custom trên nền tảng Cosmos SDK.</p>
+                    <a href="https://github.com/dang19082004/dvs-repo" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center group">
+                        <i class="fab fa-github mr-2"></i> Xem trên GitHub 
+                        <svg class="w-4 h-4 ml-1 transition duration-300 group-hover:translate-x-1 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                </div>
+
+                <div class="bg-gray-800/80 p-6 rounded-2xl shadow-xl border border-purple-700/50 hover:bg-gray-700/60 transition duration-300 animate-scroll-reveal" data-delay="0.2s">
+                    <h3 class="text-2xl font-bold text-purple-400 mb-2">Web3 Identity Management (WIM)</h3>
+                    <p class="text-sm italic text-gray-400 mb-3">Công nghệ: Web3.js, C# Identity Server, PostgreSQL</p>
+                    <p class="text-300 mb-4">Xây dựng hệ thống quản lý danh tính sử dụng ví crypto (MetaMask) để đăng nhập (**Sign-in with Ethereum**). Cung cấp một lớp bảo mật OAuth 2.0/OIDC trên .NET Identity Server, liên kết ID on-chain với hồ sơ truyền thống.</p>
+                    <a href="https://project.wim.com" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center group">
+                        <i class="fas fa-desktop mr-2"></i> Xem Demo
+                        <svg class="w-4 h-4 ml-1 transition duration-300 group-hover:translate-x-1 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-3xl font-extrabold mb-6 border-b-4 border-indigo-500/80 pb-3 premium-text animate-scroll-reveal" data-delay="0s">
+                 <i class="fas fa-camera-retro mr-2"></i> Ảnh Đã Check-in
+            </h2>
+            
+            <div id="posts-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <template x-for="(post, index) in posts" :key="index">
+                    <div class="bg-gray-800/80 shadow-2xl rounded-xl overflow-hidden transform transition duration-500 hover:scale-[1.03] hover:shadow-indigo-500/50 border border-gray-700 animate-scroll-reveal" :data-delay="`${0.1 + index * 0.05}s`">
+                        <div class="relative w-full h-64 overflow-hidden">
+                            <img :src="post.imageUrl" :alt="post.content" 
+                                 class="w-full h-full object-cover transition duration-700 ease-in-out transform hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/30 to-transparent"></div>
+                        </div>
+                        
+                        <div class="p-5">
+                            <p class="text-gray-300 mb-3 line-clamp-3 font-medium text-lg" x-text="post.content"></p>
+                            <div class="flex justify-between items-center text-sm text-gray-500 mt-4 border-t border-gray-700 pt-3">
+                                <span class="flex items-center text-gray-400">🗓️ <span class="ml-1 text-xs" x-text="formatDate(post.createdAt)"></span></span>
+                                <span class="font-semibold text-indigo-400 flex items-center transition duration-300 hover:text-red-500 cursor-pointer">
+                                    <i class="fas fa-heart mr-1"></i> <span class="ml-1" x-text="post.likes + post.secretLikes"></span> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function profileData() {
+    // Khai báo dữ liệu chi tiết mới cho contacts
+    const contactsData = [
+        {
+            "id": "github", "type": "github", "title": "GitHub Profile", "description": "Kho code cá nhân và đóng góp Open Source.",
+            "value": "DangVuDev", "url": "https://github.com/DangVuDev",
+            "icon_url": "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg", "bg_color": "#24292e",
+            "target": "_blank", "action_label": "Xem Profile"
+        },
+        {
+            "id": "linkedin", "type": "linkedin", "title": "LinkedIn Network", "description": "Mạng lưới chuyên nghiệp và kinh nghiệm làm việc.",
+            "value": "dang19082004", "url": "https://linkedin.com/in/dang19082004",
+            "icon_url": "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg", "bg_color": "#0077B5",
+            "target": "_blank", "action_label": "Kết nối"
+        },
+        {
+            "id": "facebook", "type": "facebook", "title": "Facebook Cá nhân", "description": "Trang cá nhân để giao lưu và theo dõi hoạt động.",
+            "value": "angvuvan.352925", "url": "https://www.facebook.com/angvuvan.352925",
+            "icon_url": "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg", "bg_color": "#1877F2",
+            "target": "_blank", "action_label": "Ghé thăm"
+        },
+        {
+            "id": "tiktok", "type": "tiktok", "title": "Kênh TikTok", "description": "Nơi chia sẻ nội dung sáng tạo, giải trí.",
+            "value": "@dangvu1908", "url": "https://www.tiktok.com/@dangvu1908",
+            "icon_url": "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tiktok.svg", "bg_color": "#000000",
+            "target": "_blank", "action_label": "Theo dõi"
+        },
+        {
+            "id": "email", "type": "email", "title": "Gửi Email Công việc", "description": "Liên hệ cho dự án hoặc hợp tác chính thức.",
+            "value": "dang19082004@gmail.com", "url": "mailto:dang19082004@gmail.com",
+            "icon_url": "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg", "bg_color": "#EA4335",
+            "target": "_self", "action_label": "Soạn Email"
+        },
+        {
+            "id": "zalo-phone", "type": "zalo-phone", "title": "Zalo/Số Điện Thoại", "description": "Liên lạc nhanh chóng qua Zalo hoặc gọi trực tiếp.",
+            "value": "0789 108 925", "url": "tel:0789108925",
+            "icon_url": "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/zalo.svg", "bg_color": "#0068FF",
+            "target": "_self", "action_label": "Gọi/Mở Zalo"
+        }
+    ];
+
+    return {
+        user: {
+            // ... dữ liệu người dùng (giữ nguyên)
+            "id": "@dang19082004",
+            "email": "dang19082004@gmail.com",
+            "name": "Vũ Văn Đăng",
+            "bio": "Backend developer chuyên nghiệp, say mê blockchain, Web3 và các giải pháp bảo mật cao cấp.",
+            "hometown": "Hà Nội, Việt Nam",
+            "education": "Đại học Công nghệ Thông tin",
+            "job": "Lead Software Developer",
+            "company": "FujiTech Solutions",
+            "status": "Độc Thân",
+            "interests": "C# .NET, Blockchain, Cosmos SDK, Web3, AI/ML, Security",
+            "profileImageUrl": "https://res.cloudinary.com/dnx8aew1t/image/upload/v1759855080/string/7242c6df-df7f-4bbd-b87b-71f23faa9d84.png",
+
+            // DỮ LIỆU CONTACT ĐÃ CẬP NHẬT THEO CẤU TRÚC MỚI
+            "contacts": contactsData
+        },
+        posts: [
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n1",
+        "userId": "@dang19082004",
+        "content": "Buổi sáng tuyệt vời để bắt đầu ngày mới!",
+        "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+        "createdAt": "2025-09-29T10:00:00.000Z",
+        "likes": 55,
+        "secretLikes": 10,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n2",
+        "userId": "@dang19082004",
+        "content": "Cà phê sáng cùng bạn bè ☕",
+        "imageUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93",
+        "createdAt": "2025-09-28T08:15:00.000Z",
+        "likes": 32,
+        "secretLikes": 5,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n3",
+        "userId": "@dang19082004",
+        "content": "Hôm nay học được rất nhiều điều mới về ASP.NET Core!",
+        "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c",
+        "createdAt": "2025-09-27T14:30:00.000Z",
+        "likes": 48,
+        "secretLikes": 15,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n4",
+        "userId": "@dang19082004",
+        "content": "Cuối tuần thư giãn bên gia đình ❤️",
+        "imageUrl": "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+        "createdAt": "2025-09-26T18:45:00.000Z",
+        "likes": 78,
+        "secretLikes": 22,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n5",
+        "userId": "@dang19082004",
+        "content": "Code xong một tính năng cực kỳ khó, cảm giác phê thật!",
+        "imageUrl": "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+        "createdAt": "2025-09-25T20:10:00.000Z",
+        "likes": 61,
+        "secretLikes": 18,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n7",
+        "userId": "@dang19082004",
+        "content": "Trời mưa nghe nhạc chill thật đã ☔",
+        "imageUrl": "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+        "createdAt": "2025-09-23T21:30:00.000Z",
+        "likes": 52,
+        "secretLikes": 11,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n8",
+        "userId": "@dang19082004",
+        "content": "Tập thể dục buổi sáng giúp tinh thần sảng khoái 💪",
+        "imageUrl": "https://images.unsplash.com/photo-1599058917212-d750089bc07e",
+        "createdAt": "2025-09-22T06:45:00.000Z",
+        "likes": 29,
+        "secretLikes": 4,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n9",
+        "userId": "@dang19082004",
+        "content": "Một ngày làm việc năng suất cùng đồng đội!",
+        "imageUrl": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7",
+        "createdAt": "2025-09-21T17:55:00.000Z",
+        "likes": 38,
+        "secretLikes": 6,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n10",
+        "userId": "@dang19082004",
+        "content": "Vừa đọc xong một cuốn sách rất hay 📖",
+        "imageUrl": "https://images.unsplash.com/photo-1512820790803-83ca734da794",
+        "createdAt": "2025-09-20T12:05:00.000Z",
+        "likes": 45,
+        "secretLikes": 8,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n11",
+        "userId": "@dang19082004",
+        "content": "Hôm nay trời thật đẹp 🌤️",
+        "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+        "createdAt": "2025-09-19T11:15:00.000Z",
+        "likes": 60,
+        "secretLikes": 13,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n12",
+        "userId": "@dang19082004",
+        "content": "Một tách trà chiều ấm áp 🍵",
+        "imageUrl": "https://images.unsplash.com/photo-1498804103079-a6351b050096",
+        "createdAt": "2025-09-18T16:25:00.000Z",
+        "likes": 25,
+        "secretLikes": 3,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n13",
+        "userId": "@dang19082004",
+        "content": "Thử nghiệm giao diện mới cho dự án Flutter 😍",
+        "imageUrl": "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+        "createdAt": "2025-09-17T15:40:00.000Z",
+        "likes": 58,
+        "secretLikes": 16,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n15",
+        "userId": "@dang19082004",
+        "content": "Tối nay nấu món spaghetti cho cả nhà 🍝",
+        "imageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141",
+        "createdAt": "2025-09-15T19:20:00.000Z",
+        "likes": 44,
+        "secretLikes": 10,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n16",
+        "userId": "@dang19082004",
+        "content": "Đi dạo ngắm hoàng hôn thật chill 🌇",
+        "imageUrl": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+        "createdAt": "2025-09-14T17:35:00.000Z",
+        "likes": 75,
+        "secretLikes": 25,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n17",
+        "userId": "@dang19082004",
+        "content": "Bắt đầu tuần mới đầy năng lượng 💼",
+        "imageUrl": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+        "createdAt": "2025-09-13T08:00:00.000Z",
+        "likes": 31,
+        "secretLikes": 5,
+        "comments": []
+    },
+    {
+        "id": "70a1d2e3f4g5h6i7j8k9l0n20",
+        "userId": "@dang19082004",
+        "content": "Thử sống chậm lại, tận hưởng khoảnh khắc hiện tại 🌸",
+        "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+        "createdAt": "2025-09-10T10:00:00.000Z",
+        "likes": 63,
+        "secretLikes": 15,
+        "comments": []
+    }
+],
+
+        // Trạng thái cho Copy to Clipboard (giữ nguyên)
+        copyMessage: '',
+        showCopyMessage: false,
+
+        // Đã loại bỏ getIconColorClass và getIconClass vì đã dùng icon_url/bg_color
+
+        // Hàm định dạng ngày tháng (giữ nguyên)
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN', {
+                day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+        },
+
+        // Logic Copy to Clipboard (Đã thay contact.type === 'zalo' thành contact.type === 'zalo-phone')
+        copyText(text, name) {
+            const valueToCopy = text.replace(/\s/g, ''); 
+            
+            navigator.clipboard.writeText(valueToCopy).then(() => {
+                this.copyMessage = `Đã sao chép ${name}: ${valueToCopy}`;
+                this.showCopyMessage = true;
+                
+                setTimeout(() => {
+                    this.showCopyMessage = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Không thể sao chép văn bản: ', err);
+                alert(`Không thể sao chép. Vui lòng sao chép thủ công: ${valueToCopy}`);
+            });
+        },
+
+        // Logic cho Scroll-Reveal Animation (giữ nguyên)
+        initObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const delay = element.getAttribute('data-delay') || '0s';
+                        
+                        setTimeout(() => {
+                            element.classList.add('animated');
+                        }, parseFloat(delay) * 1000); 
+
+                        observer.unobserve(element);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 
+            });
+
+            document.querySelectorAll('.animate-scroll-reveal').forEach((el) => {
+                observer.observe(el);
+            });
+        }
+    }
+}</script>
 </body>
 </html>
