@@ -130,10 +130,6 @@
         </nav>
 
         <div class="flex items-center gap-4">
-            <div id="fees-display" class="hidden bg-accent/50 border border-neon-pink px-4 py-2 rounded-lg text-sm">
-                Phí: <span id="owner-fees" class="font-bold text-neon-pink">0.0</span> ETH
-                <button onclick="withdrawFees()" class="ml-3 px-3 py-1 bg-neon-pink text-card rounded font-bold hover:scale-105 transition">Rút</button>
-            </div>
 
             <div id="wallet-info" class="hidden bg-accent/70 border border-neon-green px-4 py-2 rounded-lg text-sm">
                 <div id="account-display" class="font-mono text-neon-green font-bold"></div>
@@ -273,7 +269,7 @@
 
 <script>
     // ====================== CẤU HÌNH & HẰNG SỐ ======================
-    const CONTRACT_ADDRESS = "0xb292afC00C40aEbb205453d9A61878eAB03878E5";
+    const CONTRACT_ADDRESS = "0x206af0d581a4B269BF8D6f4b239d8E1484755aD8";
     const PUBLIC_RPC_URL = 'https://bsc-dataseed1.binance.org/';
 
     
@@ -298,58 +294,39 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "startPrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "duration",
-				"type": "uint256"
-			}
-		],
-		"name": "auctionNFT",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "auctionSettlement",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "bid",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "AlreadyListed",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "AuctionEnded",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "AuctionNotEnded",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "BidTooLow",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "CannotBuyOwnToken",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "DurationTooShort",
+		"type": "error"
 	},
 	{
 		"inputs": [
@@ -455,25 +432,83 @@
 		"type": "error"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			}
-		],
-		"name": "OwnableInvalidOwner",
+		"inputs": [],
+		"name": "ETHTransferFailed",
 		"type": "error"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
-		"name": "OwnableUnauthorizedAccount",
+		"inputs": [],
+		"name": "ExactPriceRequired",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "FeeWithdrawalFailed",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "ImageRequired",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "InvalidAddress",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "LimitMustBePositive",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NoFundsAvailable",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NotApproved",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NotListedForAuction",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NotListedForFixedPrice",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NotOwnerToken",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "OnlyOwnerRequest",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "PageStartFromOne",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "PriceMustBePositive",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "TitleRequired",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "TokenDoesNotExist",
 		"type": "error"
 	},
 	{
@@ -525,6 +560,55 @@
 		],
 		"name": "ApprovalForAll",
 		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "startPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "duration",
+				"type": "uint256"
+			}
+		],
+		"name": "auctionNFT",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "auctionSettlement",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "bid",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -726,25 +810,6 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
 				"indexed": false,
 				"internalType": "address",
 				"name": "sender",
@@ -778,13 +843,6 @@
 		],
 		"name": "RefundPending",
 		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -936,19 +994,6 @@
 			}
 		],
 		"name": "transferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -1152,6 +1197,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getPendingFees",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -1326,11 +1384,11 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "owner",
+				"name": "_address",
 				"type": "address"
 			}
 		],
-		"name": "getTokensByOwner",
+		"name": "getTokensByAddress",
 		"outputs": [
 			{
 				"components": [
@@ -1460,7 +1518,7 @@
 		"name": "owner",
 		"outputs": [
 			{
-				"internalType": "address",
+				"internalType": "address payable",
 				"name": "",
 				"type": "address"
 			}
@@ -1609,34 +1667,9 @@
 		],
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "userTokens",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
 	}
-]; 
-
-    const SALE_TYPE = {
+];
+const SALE_TYPE = {
         NOT_LISTED: 0,
         FIXED_PRICE: 1,
         AUCTION: 2
@@ -1747,7 +1780,7 @@
         if (!currentAccount) return;
         try {
             const readOnly = new ethers.Contract(CONTRACT_ADDRESS, MARKET_ABI, provider);
-            const feesWei = await readOnly.getOwnerFees();
+            const feesWei = await readOnly.getPendingFees();
             const feesEth = formatEth(feesWei, 4);
 
             if (currentAccount.toLowerCase() === contractOwner.toLowerCase()) {
@@ -1795,7 +1828,7 @@
     const loadNFTsForProfile = async () => {
         if (!contract) return showMessage("Vui lòng kết nối ví để xem Profile", true);
         try {
-            const myTokens = await contract.getTokensByOwner(currentAccount);
+            const myTokens = await contract.getTokensByAddress(currentAccount);
             // Cập nhật cache (có thể merge với allTokens nếu cần, nhưng tạm thời chỉ dùng myTokens)
             console.log("My Tokens:", myTokens);
             currentNFTsData = myTokens; 
@@ -1811,7 +1844,7 @@
         if (!currentAccount || !provider) return;
         try {
             const readOnly = new ethers.Contract(CONTRACT_ADDRESS, MARKET_ABI, provider);
-            const returnsWei = await readOnly.getPendingReturns(currentAccount);
+            const returnsWei = await readOnly.pendingReturns(currentAccount);
             const returnsEth = formatEth(returnsWei, 4);
 
             if (returnsEth > 0) {
@@ -1923,7 +1956,7 @@ const handlePlaceBid = async (tokenId, bidAmountEth) => {
     try {
         const bidAmountWei = ethers.utils.parseEther(bidAmountEth);
         // GIẢ ĐỊNH hàm đặt bid trong contract là placeBid, cần gửi kèm value
-        const tx = await contract.placeBid(tokenId, { value: bidAmountWei });
+        const tx = await contract.bid(tokenId, { value: bidAmountWei });
         await tx.wait();
         showMessage(`Đặt Bid ${bidAmountEth} ETH cho Token ID ${tokenId} thành công!`);
         await loadNFTsForExplore();
@@ -1968,7 +2001,7 @@ const handleListFixedPrice = async (tokenId, priceEth) => {
     try {
         const priceWei = ethers.utils.parseEther(priceEth);
         // GIẢ ĐỊNH hàm niêm yết là listFixedPrice
-        const tx = await contract.listFixedPrice(tokenId, priceWei);
+        const tx = await contract.saleNFT(tokenId, priceWei);
         await tx.wait();
         showMessage(`Niêm yết Token ID ${tokenId} với giá ${priceEth} ETH thành công!`);
         await loadNFTsForProfile();
@@ -2026,7 +2059,7 @@ const handleListAuction = async (tokenId, startPriceEth, durationDays) => {
         const durationSeconds = durationDays * 86400; 
         
         // GIẢ ĐỊNH hàm niêm yết là listAuction
-        const tx = await contract.listAuction(tokenId, startPriceWei, durationSeconds);
+        const tx = await contract.auctionNFT(tokenId, startPriceWei, durationSeconds);
         await tx.wait();
         showMessage(`Tạo đấu giá Token ID ${tokenId} thành công, kéo dài ${durationDays} ngày!`);
         await loadNFTsForProfile();
@@ -2094,7 +2127,7 @@ const handleSettlement = async (tokenId) => {
     
     try {
         // GIẢ ĐỊNH hàm hoàn tất đấu giá là settleAuction
-        const tx = await contract.settleAuction(tokenId);
+        const tx = await contract.auctionSettlement(tokenId);
         await tx.wait();
         showMessage(`Settlement Token ID ${tokenId} thành công!`);
         await loadNFTsForProfile(); // Cập nhật Profile (chủ sở hữu cũ mất NFT)
@@ -2111,7 +2144,7 @@ const withdrawPendingReturns = async () => {
     showLoading("Đang rút ETH...");
     try {
         // GIẢ ĐỊNH hàm rút ETH cho người bán và người đặt bid thua là withdraw
-        const tx = await contract.withdraw();
+        const tx = await contract.withdrawPendingReturns();
         await tx.wait();
         showMessage("Rút ETH thành công!");
         await updatePendingReturnsDisplay();
@@ -2398,7 +2431,7 @@ const withdrawPendingReturns = async () => {
             
             showLoading("Đang Mint NFT...");
             try {
-                const tx = await contract.mintNFT(title, image);
+                const tx = await contract.mintNewNFT(title, image);
                 await tx.wait();
                 showMessage(`Mint NFT "${title}" thành công!`);
                 document.getElementById('mint-form').reset();
